@@ -1,2 +1,2 @@
 # MathKit
-Collection of Mathmatic and Statistical Operators
+Collection of Mathmatical and Statistical Operators
