@@ -27,8 +27,9 @@ class Statistics:
         Returns:
             int: sum of the values divided by the number of the values. 
         """
-
-        return sum(self.value_set) / len(self.value_set)  # sum is a function, that sums up all the elements in the list
+        
+        value = self.value_set
+        return sum(value) / len(value)  # sum is a function, that sums up all the elements in the list
 
 
     def std_dev(self):
@@ -39,15 +40,16 @@ class Statistics:
         Returns:
             int: return a single integer 
         """
+        value = self.value_set
 
         mean = self.std_mean()
         difference = []
 
-        for i in range(len(self.value_set)):
+        for i in range(len(value)):
 
-            difference.append(self.value_set[i] - mean)   # appending the difference of the value from mean
+            difference.append(value[i] - mean)   # appending the difference of the value from mean
         
-        std_dev = np.sqrt(sum(np.square(difference))/ (len(self.value_set) - 1))
+        std_dev = np.sqrt(sum(np.square(difference))/ (len(value) - 1))
 
         return std_dev
 
@@ -62,6 +64,35 @@ class Statistics:
         Returns:
             int: return how random the errors are. 
         """
+        value = self.value_set
+        
+        std_dev = self.std_dev()    # standard deviation
+
+        return std_dev / np.sqrt(len(value))
+    
+
+    def total_uncertainty_value(self, systematic):
+        """getting the total Error of my measured variable of the experiment.
+        Like the total error for the length or the time or whatever.
+        -> the systematic error for the time is mostly the last digit from the timer
+        
+
+        Args:
+            systematic (int): uncertainty due to measurement limitation
+
+        Returns:
+            total error: the total uncertainty of my measured value (include random and systematic erros)
+        """
+
+        
+        value = self.value_set
         std_dev = self.std_dev()
 
-        return std_dev / np.sqrt(len(self.value_set))
+        random_err = (1 / np.sqrt(len(value))) * std_dev    # calculate random error
+
+        total_err = np.sqrt( random_err ** 2 + systematic ** 2) # total error -> combined random and systematic errors
+
+        return total_err
+    
+
+
