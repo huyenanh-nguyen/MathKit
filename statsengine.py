@@ -95,4 +95,22 @@ class Statistics:
         return total_err
     
 
+    def relative_total_uncertainty(self, systematic):
+        """_summary_
+
+        Args:
+            systematic (float): uncertainty due to measurement limitation (like offset of my instrument or uncercainty of my instruments)
+
+        Returns:
+            relative Error in percent (returns only the value without the unit)
+        """
+    
+
+        total_error = self.total_uncertainty_value(systematic)
+        mean = self.std_mean()
+
+        relative = (total_error / mean ) * 100
+
+        return relative
+
 
